@@ -1,0 +1,136 @@
+*{
+    background-color: #212121;
+}
+
+
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(5, 3rem);
+    gap: 0.8rem;
+    justify-content: center;
+    margin-left: auto;
+
+}
+
+.card-slot{
+border-radius: 0.4rem;
+border: 2px solid #D9D9D9;
+height: 4rem;
+width: 3rem;
+background-size: cover;
+}
+
+.extra-cards-container{
+display: flex;
+gap: 0.8rem;
+margin-top: 1rem;
+padding: 0.5rem;
+justify-content: center;
+}
+
+#board-divider{
+    border: 2px solid white;
+    margin:2rem;
+}
+
+#buttons-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.game-button{
+    padding: 0.1em 0.25em;
+  width: 13em;
+  height: 4.2em;
+  background-color: #212121;
+  border: 0.08em solid #fff;
+  border-radius: 0.3em;
+  font-size: 12px;
+  margin: 0 0.5rem;
+}
+
+.game-button span{
+    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0.4em;
+  width: 8.25em;
+  height: 2.5em;
+  background-color: #212121;
+  border-radius: 0.2em;
+  font-size: 1.5em;
+  color: #fff;
+  border: 0.08em solid #fff;
+  box-shadow: 0 0.4em 0.1em 0.019em #fff;
+  cursor: pointer;
+}
+
+.game-button span:hover {
+    transition: all 0.5s;
+    transform: translate(0, 0.4em);
+    box-shadow: 0 0 0 0 #fff;
+  }
+
+  .game-button span:not(hover) {
+    transition: all 1s;
+  }
+
+  .NormalCard\+1\.png{
+    background-image: url("/src/assets/NormalCard+1.png");
+  }
+  .NormalCard\+2\.png{
+    background-image: url("/src/assets/NormalCard+2.png");
+  }
+  .NormalCard\+3\.png{
+    background-image: url("/src/assets/NormalCard+3.png");
+  }
+  .NormalCard\+4\.png{
+    background-image: url("/src/assets/NormalCard+4.png");
+  }
+  .NormalCard\+5\.png{
+    background-image: url("/src/assets/NormalCard+5.png");
+  }
+  .NormalCard\+6\.png{
+    background-image: url("/src/assets/NormalCard+6.png");
+  }
+  .NormalCard\+7\.png{
+    background-image: url("/src/assets/NormalCard+7.png");
+  }
+  .NormalCard\+8\.png{
+    background-image: url("/src/assets/NormalCard+8.png");
+  }
+  .NormalCard\+9\.png{
+    background-image: url("/src/assets/NormalCard+9.png");
+  }
+  .NormalCard\+10\.png{
+    background-image: url("/src/assets/NormalCard+10.png");
+  }
+  .ExtraCard-1\.png{
+    background-image: url("/src/assets/ExtraCard-1.png");
+  }
+  .ExtraCard-2\.png{
+    background-image: url("/src/assets/ExtraCard-2.png");
+  }
+  .ExtraCard-3\.png{
+    background-image: url("/src/assets/ExtraCard-3.png");
+  }
+  .ExtraCard-4\.png{
+    background-image: url("/src/assets/ExtraCard-4.png");
+  }
+  .ExtraCard\+1\.png{
+    background-image: url("/src/assets/ExtraCard+1.png");
+  }
+  .ExtraCard\+2\.png{
+    background-image: url("/src/assets/ExtraCard+2.png");
+  }
+  .ExtraCard\+3\.png{
+    background-image: url("/src/assets/ExtraCard+3.png");
+  }
+  .ExtraCard\+4\.png{
+    background-image: url("/src/assets/ExtraCard+4.png");
+  }
+  .ExtraCard\+5\.png{
+    background-image: url("/src/assets/ExtraCard+5.png");
+  }
