@@ -31,6 +31,26 @@ body{
     }
   }
 
+  @keyframes cardAnimation {
+    0%{
+      right: 100vw
+    }
+
+    50%{
+      right: 20px;
+    }
+    60%{
+      right: 0px;
+    }
+    70%{
+      right: 10px;
+    }
+
+    100%{
+      right: 0px;
+    }
+  }
+
 .activeBorder{
     border-radius: 3rem;
     animation: borderAnimation 3s infinite linear;
@@ -113,38 +133,67 @@ justify-content: center;
     transition: all 1s;
   }
 
+#card-slot-image{
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    border-radius: 0.2rem;
+}
+
   .NormalCard\+1\.png{
     background-image: url("/src/assets/NormalCard+1.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
+
   .NormalCard\+2\.png{
     background-image: url("/src/assets/NormalCard+2.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+3\.png{
     background-image: url("/src/assets/NormalCard+3.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+4\.png{
     background-image: url("/src/assets/NormalCard+4.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+5\.png{
     background-image: url("/src/assets/NormalCard+5.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+6\.png{
     background-image: url("/src/assets/NormalCard+6.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+7\.png{
     background-image: url("/src/assets/NormalCard+7.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+8\.png{
     background-image: url("/src/assets/NormalCard+8.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+9\.png{
     background-image: url("/src/assets/NormalCard+9.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .NormalCard\+10\.png{
     background-image: url("/src/assets/NormalCard+10.png");
+    position: relative;
+    animation: cardAnimation 0.5s linear;
   }
   .ExtraCard-1\.png{
     background-image: url("/src/assets/ExtraCard-1.png");
+
   }
   .ExtraCard-2\.png{
     background-image: url("/src/assets/ExtraCard-2.png");

@@ -4,6 +4,7 @@ import "./multiplayerGame.css";
 export const MultiplayerGame = () => {
   const [playerOneTurn, setPlayerOneTurn] = useState(true);
   const [turnCounter, setTurnCounter] = useState(1);
+
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [cardClasses, setCardClasses] = useState({});
@@ -33,6 +34,31 @@ export const MultiplayerGame = () => {
     "NormalCard+9.png",
     "NormalCard+10.png",
   ]);
+
+  const scoreCounter = (card) => {
+    switch (card) {
+      case "NormalCard+1.png":
+        return 1;
+      case "NormalCard+2.png":
+        return 2;
+      case "NormalCard+3.png":
+        return 3;
+      case "NormalCard+4.png":
+        return 4;
+      case "NormalCard+5.png":
+        return 5;
+      case "NormalCard+6.png":
+        return 6;
+      case "NormalCard+7.png":
+        return 7;
+      case "NormalCard+8.png":
+        return 8;
+      case "NormalCard+9.png":
+        return 9;
+      case "NormalCard+10.png":
+        return 10;
+    }
+  };
 
   const startGame = () => {
     //random number for the first card
@@ -103,31 +129,6 @@ export const MultiplayerGame = () => {
     }
   };
 
-  const scoreCounter = (card) => {
-    switch (card) {
-      case "NormalCard+1.png":
-        return 1;
-      case "NormalCard+2.png":
-        return 2;
-      case "NormalCard+3.png":
-        return 3;
-      case "NormalCard+4.png":
-        return 4;
-      case "NormalCard+5.png":
-        return 5;
-      case "NormalCard+6.png":
-        return 6;
-      case "NormalCard+7.png":
-        return 7;
-      case "NormalCard+8.png":
-        return 8;
-      case "NormalCard+9.png":
-        return 9;
-      case "NormalCard+10.png":
-        return 10;
-    }
-  };
-
   //Runs only once on first render
   useEffect(() => {
     startGame();
@@ -135,18 +136,36 @@ export const MultiplayerGame = () => {
 
   return (
     <div id="board">
-      <div className={`playerOneBoard ${playerOneTurn ? "activeBorder" : ""}`}>
+      <div className={`playerTwoBoard ${playerOneTurn ? "" : "activeBorder"}`}>
         <div className="card-container">
-          <div className={`card-slot ${cardClasses.p1c1} `}></div>
-          <div className={`card-slot ${cardClasses.p1c2} `}></div>
-          <div className={`card-slot ${cardClasses.p1c3} `}></div>
-          <div className={`card-slot ${cardClasses.p1c4} `}></div>
-          <div className={`card-slot ${cardClasses.p1c5} `}></div>
-          <div className={`card-slot ${cardClasses.p1c6} `}></div>
-          <div className={`card-slot ${cardClasses.p1c7} `}></div>
-          <div className={`card-slot ${cardClasses.p1c8} `}></div>
-          <div className={`card-slot ${cardClasses.p1c9} `}></div>
-          <div className="playerScore">{playerOneScore}</div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c1}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c2}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c3}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c4}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c5}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c6}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c7}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c8}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p2c9}`}></div>
+          </div>
+          <div className="playerScore">{playerTwoScore}</div>
         </div>
         <div className="extra-cards-container">
           <div className="extra-card-slot card-slot"></div>
@@ -155,18 +174,36 @@ export const MultiplayerGame = () => {
         </div>
       </div>
       <div id="board-divider"></div>
-      <div className={`playerTwoBoard ${playerOneTurn ? "" : "activeBorder"}`}>
+      <div className={`playerOneBoard ${playerOneTurn ? "activeBorder" : ""}`}>
         <div className="card-container">
-          <div className={`card-slot ${cardClasses.p2c1} `}></div>
-          <div className={`card-slot ${cardClasses.p2c2} `}></div>
-          <div className={`card-slot ${cardClasses.p2c3} `}></div>
-          <div className={`card-slot ${cardClasses.p2c4} `}></div>
-          <div className={`card-slot ${cardClasses.p2c5} `}></div>
-          <div className={`card-slot ${cardClasses.p2c6} `}></div>
-          <div className={`card-slot ${cardClasses.p2c7} `}></div>
-          <div className={`card-slot ${cardClasses.p2c8} `}></div>
-          <div className={`card-slot ${cardClasses.p2c9} `}></div>
-          <div className="playerScore">{playerTwoScore}</div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c1}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c2}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c3}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c4}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c5}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c6}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c7}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c8}`}></div>
+          </div>
+          <div className={`card-slot`}>
+            <div id="card-slot-image" className={`${cardClasses.p1c9}`}></div>
+          </div>
+          <div className="playerScore">{playerOneScore}</div>
         </div>
         <div className="extra-cards-container">
           <div className="extra-card-slot card-slot"></div>
