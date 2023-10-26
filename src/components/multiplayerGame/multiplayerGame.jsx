@@ -3,8 +3,8 @@ import "./multiplayerGame.css";
 
 export const MultiplayerGame = () => {
   const [playerOneTurn, setPlayerOneTurn] = useState(true);
-  const [turnCounter, setTurnCounter] = useState(1);
-
+  const [playerOneTurnCounter, setPlayerOneTurnCounter] = useState(1);
+  const [playerTwoTurnCounter, setPlayerTwoTurnCounter] = useState(1);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [cardClasses, setCardClasses] = useState({});
@@ -86,7 +86,7 @@ export const MultiplayerGame = () => {
 
     if (!playerOneTurn) {
       //checks turn to add the right card
-      let p1CardSlot = `p1c${turnCounter}`;
+      let p1CardSlot = `p1c${playerOneTurnCounter}`;
 
       //adds the right card class to the right card-slot element
       setCardClasses((prevState) => {
@@ -102,11 +102,13 @@ export const MultiplayerGame = () => {
         playerOneDeck.filter((_, index) => index !== newCard)
       );
 
+      //player turn counter +1 for next card slot
+      setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
       //end player 1 turn
       setPlayerOneTurn(!playerOneTurn);
     } else {
       //checks turn to add the right card
-      let p2CardSlot = `p2c${turnCounter}`;
+      let p2CardSlot = `p2c${playerTwoTurnCounter}`;
 
       //adds the right card class to the right card-slot element
       setCardClasses((prevState) => {
@@ -122,8 +124,8 @@ export const MultiplayerGame = () => {
         playerTwoDeck.filter((_, index) => index !== newCard)
       );
 
-      //end turn
-      setTurnCounter(turnCounter + 1);
+      //player turn counter +1 for next card slot
+      setPlayerOneTurnCounter(playerOneTurnCounter + 1);
       //end player 2 turn
       setPlayerOneTurn(!playerOneTurn);
     }
