@@ -5,9 +5,17 @@ export const MultiplayerGame = () => {
   const [playerOneTurn, setPlayerOneTurn] = useState(true);
   const [playerOneTurnCounter, setPlayerOneTurnCounter] = useState(1);
   const [playerTwoTurnCounter, setPlayerTwoTurnCounter] = useState(1);
+  const [playerOneStand, setPlayerOneStand] = useState(false);
+  const [playerTwoStand, setPlayerTwoStand] = useState(false);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [cardClasses, setCardClasses] = useState({});
+
+  const playerOneScoreClass =
+    playerOneScore > 20 ? "highScoreColor" : "lowScoreColor";
+
+  const playerTwoScoreClass =
+    playerTwoScore > 20 ? "highScoreColor" : "lowScoreColor";
 
   const [playerOneDeck, setPlayerOneDeck] = useState([
     "NormalCard+1.png",
@@ -59,6 +67,34 @@ export const MultiplayerGame = () => {
         return 10;
     }
   };
+
+  const playerStand = () => {
+    //sets true for the player that pressed stand
+    if (playerOneTurn) {
+      setPlayerOneStand(true);
+    } else {
+      setPlayerTwoStand(true);
+    }
+
+    //checks if both players have pressed stand and then checks win conditions
+    if (playerOneStand && playerTwoStand) {
+      TODO; //winCondition chekc that checks if both players have 20 or who has closest to 20 and not over
+    } else {
+      //otherwise it goes to the next player
+      endTurn();
+    }
+  };
+
+  const checkFor20 = () => {
+    if (playerOneScore == 20) {
+      playerStand();
+    }
+    if (playerTwoScore == 20) {
+      playerStand();
+    }
+  };
+
+  const winConditionCheck = () => {};
 
   const startGame = () => {
     //random number for the first card
@@ -167,7 +203,9 @@ export const MultiplayerGame = () => {
           <div className={`card-slot`}>
             <div id="card-slot-image" className={`${cardClasses.p2c9}`}></div>
           </div>
-          <div className="playerScore">{playerTwoScore}</div>
+          <div className={`playerScore ${playerTwoScoreClass}`}>
+            {playerTwoScore}
+          </div>
         </div>
         <div className="extra-cards-container">
           <div className="extra-card-slot card-slot"></div>
@@ -205,7 +243,9 @@ export const MultiplayerGame = () => {
           <div className={`card-slot`}>
             <div id="card-slot-image" className={`${cardClasses.p1c9}`}></div>
           </div>
-          <div className="playerScore">{playerOneScore}</div>
+          <div className={`playerScore ${playerOneScoreClass}`}>
+            {playerOneScore}
+          </div>
         </div>
         <div className="extra-cards-container">
           <div className="extra-card-slot card-slot"></div>
@@ -214,7 +254,10 @@ export const MultiplayerGame = () => {
         </div>
       </div>
       <div id="buttons-container">
-        <button className="game-button">
+        <button
+          onClick={() => (playerOneTurn ? playerStand() : playerStand())}
+          className="game-button"
+        >
           <span>Stand</span>
         </button>
         <button onClick={endTurn} className="game-button">
