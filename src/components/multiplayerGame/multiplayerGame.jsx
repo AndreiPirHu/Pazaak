@@ -17,6 +17,12 @@ export const MultiplayerGame = () => {
   const playerTwoScoreClass =
     playerTwoScore > 20 ? "highScoreColor" : "lowScoreColor";
 
+  //let playerOneTurnCounter = 1;
+  //let playerTwoTurnCounter = 1;
+
+  //let playerOneStand = false;
+  //let playerTwoStand = false;
+
   const [playerOneDeck, setPlayerOneDeck] = useState([
     "NormalCard+1.png",
     "NormalCard+2.png",
@@ -75,26 +81,16 @@ export const MultiplayerGame = () => {
     } else {
       setPlayerTwoStand(true);
     }
-
-    //checks if both players have pressed stand and then checks win conditions
-    if (playerOneStand && playerTwoStand) {
-      TODO; //winCondition chekc that checks if both players have 20 or who has closest to 20 and not over
-    } else {
-      //otherwise it goes to the next player
-      endTurn();
-    }
+    //change triggers useEffect that ends the turn
   };
 
   const checkFor20 = () => {
     if (playerOneScore == 20) {
       playerStand();
-    }
-    if (playerTwoScore == 20) {
+    } else if (playerTwoScore == 20) {
       playerStand();
     }
   };
-
-  const winConditionCheck = () => {};
 
   const startGame = () => {
     //random number for the first card
@@ -114,6 +110,113 @@ export const MultiplayerGame = () => {
       //filters the card in the array that is at the correct index point
       playerOneDeck.filter((_, index) => index !== newCard)
     );
+  };
+
+  const newEndTurn = () => {
+    //1. check if player has over 20 for instant loss
+    if (playerOneTurn) {
+      if (playerOneScore > 20) {
+        TODO; //Player one loses
+      }
+    } else {
+      if (playerTwoScore > 20) {
+        TODO; //Player two loses
+      }
+    }
+
+    //2. check if a player has pressed stand or not and set turn accordingly
+
+    //2.1.1 go over to player 2 turn
+
+    if (playerOneTurn && !playerTwoStand) {
+      //random number for the next card
+      let newCard = Math.floor(Math.random() * playerTwoDeck.length);
+      //checks turn to add the right card
+      let p2CardSlot = `p2c${playerTwoTurnCounter}`;
+      //adds the right card class to the right card-slot element
+      setCardClasses((prevState) => {
+        return { ...prevState, [p2CardSlot]: playerTwoDeck[newCard] };
+      });
+      //add the score
+      setPlayerTwoScore(playerTwoScore + scoreCounter(playerTwoDeck[newCard]));
+      //remove the already used card from the array
+      setPlayerTwoDeck(
+        //filters the card in the array that is at the correct index point
+        playerTwoDeck.filter((_, index) => index !== newCard)
+      );
+      //player turn counter +1 for next card slot
+      setPlayerOneTurnCounter(playerOneTurnCounter + 1);
+      //end player 1 turn
+      setPlayerOneTurn(!playerOneTurn);
+    }
+    //2.1.2 replay player 1 turn since player two stands
+    else if (playerOneTurn && playerTwoStand) {
+      //random number for the next card
+      let newCard = Math.floor(Math.random() * playerOneDeck.length);
+      //player turn counter +1 for next card slot
+      setPlayerOneTurnCounter(playerOneTurnCounter + 1);
+      //checks turn to add the right card
+      let p1CardSlot = `p1c${playerOneTurnCounter}`;
+      //adds the right card class to the right card-slot element
+      setCardClasses((prevState) => {
+        return { ...prevState, [p1CardSlot]: playerOneDeck[newCard] };
+      });
+      //add the score
+      setPlayerOneScore(playerOneScore + scoreCounter(playerOneDeck[newCard]));
+      //remove the already used card from the array
+      setPlayerOneDeck(
+        //filters the card in the array that is at the correct index point
+        playerOneDeck.filter((_, index) => index !== newCard)
+      );
+      //does not end player one turn
+    }
+
+    //2.2.1 go over to player 1 turn
+
+    if (!playerOneTurn && !playerOneStand) {
+      //random number for the next card
+      let newCard = Math.floor(Math.random() * playerOneDeck.length);
+      //checks turn to add the right card
+      let p1CardSlot = `p1c${playerOneTurnCounter}`;
+      //adds the right card class to the right card-slot element
+      setCardClasses((prevState) => {
+        return { ...prevState, [p1CardSlot]: playerOneDeck[newCard] };
+      });
+      //add the score
+      setPlayerOneScore(playerOneScore + scoreCounter(playerOneDeck[newCard]));
+      //remove the already used card from the array
+      setPlayerOneDeck(
+        //filters the card in the array that is at the correct index point
+        playerOneDeck.filter((_, index) => index !== newCard)
+      );
+      //player turn counter +1 for next card slot
+      setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
+      //end player 2 turn
+      setPlayerOneTurn(!playerOneTurn);
+    }
+    //2.2.2 replay player 2 turn since player 1 stands
+    else if (!playerOneTurn && playerOneStand) {
+      //random number for the next card
+      let newCard = Math.floor(Math.random() * playerTwoDeck.length);
+      //player turn counter +1 for next card slot
+      setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
+      //checks turn to add the right card
+      let p2CardSlot = `p2c${playerTwoTurnCounter}`;
+      //adds the right card class to the right card-slot element
+      setCardClasses((prevState) => {
+        return { ...prevState, [p2CardSlot]: playerTwoDeck[newCard] };
+      });
+      //add the score
+      setPlayerTwoScore(playerTwoScore + scoreCounter(playerTwoDeck[newCard]));
+      //remove the already used card from the array
+      setPlayerTwoDeck(
+        //filters the card in the array that is at the correct index point
+        playerTwoDeck.filter((_, index) => index !== newCard)
+      );
+      //does not end player one turn
+    }
+    console.log("player one turn" + playerOneTurnCounter);
+    console.log("player two turn" + playerTwoTurnCounter);
   };
 
   const endTurn = () => {
@@ -138,10 +241,15 @@ export const MultiplayerGame = () => {
         playerOneDeck.filter((_, index) => index !== newCard)
       );
 
-      //player turn counter +1 for next card slot
-      setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
-      //end player 1 turn
-      setPlayerOneTurn(!playerOneTurn);
+      //Checks if player 2 has pressed stand before passing turn, otherwise p1 replays
+      if (playerTwoStand) {
+        setPlayerOneTurnCounter(playerOneTurnCounter + 1);
+      } else {
+        //player turn counter +1 for next card slot
+        setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
+        //end player 1 turn
+        setPlayerOneTurn(!playerOneTurn);
+      }
     } else {
       //checks turn to add the right card
       let p2CardSlot = `p2c${playerTwoTurnCounter}`;
@@ -159,13 +267,36 @@ export const MultiplayerGame = () => {
         //filters the card in the array that is at the correct index point
         playerTwoDeck.filter((_, index) => index !== newCard)
       );
-
-      //player turn counter +1 for next card slot
-      setPlayerOneTurnCounter(playerOneTurnCounter + 1);
-      //end player 2 turn
-      setPlayerOneTurn(!playerOneTurn);
+      //Checks if player 2 has pressed stand before passing turn, otherwise p1 replays
+      if (playerOneStand) {
+        setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
+      } else {
+        //player turn counter +1 for next card slot
+        setPlayerOneTurnCounter(playerOneTurnCounter + 1);
+        //end player 2 turn
+        setPlayerOneTurn(!playerOneTurn);
+      }
     }
   };
+
+  useEffect(() => {
+    //checks if both players have pressed stand and then checks win conditions
+    if (playerOneStand && playerTwoStand) {
+      TODO; //winCondition chekc that checks if both players have 20 or who has closest to 20 and not over
+    } else if (playerOneStand || playerTwoStand) {
+      if (playerOneStand) {
+        setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
+      } else if (playerTwoStand) {
+        setPlayerOneTurnCounter(playerOneTurnCounter + 1);
+      }
+      //otherwise it goes to the next player
+      newEndTurn();
+    }
+  }, [playerOneStand, playerTwoStand]);
+
+  useEffect(() => {
+    checkFor20();
+  }, [playerOneScore, playerTwoScore]);
 
   //Runs only once on first render
   useEffect(() => {
@@ -254,13 +385,10 @@ export const MultiplayerGame = () => {
         </div>
       </div>
       <div id="buttons-container">
-        <button
-          onClick={() => (playerOneTurn ? playerStand() : playerStand())}
-          className="game-button"
-        >
+        <button onClick={playerStand} className="game-button">
           <span>Stand</span>
         </button>
-        <button onClick={endTurn} className="game-button">
+        <button onClick={newEndTurn} className="game-button">
           <span>End Turn</span>
         </button>
       </div>
