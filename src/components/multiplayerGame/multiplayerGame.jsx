@@ -9,19 +9,15 @@ export const MultiplayerGame = () => {
   const [playerTwoStand, setPlayerTwoStand] = useState(false);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
+  const [currentPlayerScore, setCurrentPlayerScore] = useState(0);
   const [cardClasses, setCardClasses] = useState({});
-
+  const [playerOneExtraCards, setPlayerOneExtraCards] = useState({});
+  const [playerTwoExtraCards, setPlayerTwoExtraCards] = useState({});
   const playerOneScoreClass =
     playerOneScore > 20 ? "highScoreColor" : "lowScoreColor";
 
   const playerTwoScoreClass =
     playerTwoScore > 20 ? "highScoreColor" : "lowScoreColor";
-
-  //let playerOneTurnCounter = 1;
-  //let playerTwoTurnCounter = 1;
-
-  //let playerOneStand = false;
-  //let playerTwoStand = false;
 
   const [playerOneDeck, setPlayerOneDeck] = useState([
     "NormalCard+1.png",
@@ -84,10 +80,20 @@ export const MultiplayerGame = () => {
     //change triggers useEffect that ends the turn
   };
 
+  const checkForOver20 = () => {
+    //updates currentPlayerScore useState to disable or enable stand button
+    if (playerOneTurn) {
+      setCurrentPlayerScore(playerOneScore);
+    } else {
+      setCurrentPlayerScore(playerTwoScore);
+    }
+  };
+
   const checkFor20 = () => {
-    if (playerOneScore == 20) {
-      playerStand();
-    } else if (playerTwoScore == 20) {
+    if (
+      (playerOneTurn && playerOneScore == 20) ||
+      (!playerOneTurn && playerTwoScore == 20)
+    ) {
       playerStand();
     }
   };
@@ -296,6 +302,7 @@ export const MultiplayerGame = () => {
 
   useEffect(() => {
     checkFor20();
+    checkForOver20();
   }, [playerOneScore, playerTwoScore]);
 
   //Runs only once on first render
@@ -379,14 +386,22 @@ export const MultiplayerGame = () => {
           </div>
         </div>
         <div className="extra-cards-container">
-          <div className="extra-card-slot card-slot"></div>
+          <div className="extra-card-slot card-slot">
+            <div id="card-slot-image" className={`${cardClasses.p1c7}`}></div>
+          </div>
           <div className="extra-card-slot card-slot"></div>
           <div className="extra-card-slot card-slot"></div>
         </div>
       </div>
       <div id="buttons-container">
-        <button onClick={playerStand} className="game-button">
-          <span>Stand</span>
+        <button
+          onClick={playerStand}
+          disabled={currentPlayerScore > 20}
+          className="game-button"
+        >
+          <span id={`${currentPlayerScore > 20 ? "button-disabled" : ""}`}>
+            Stand
+          </span>
         </button>
         <button onClick={newEndTurn} className="game-button">
           <span>End Turn</span>
