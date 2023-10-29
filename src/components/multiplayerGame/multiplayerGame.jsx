@@ -221,8 +221,6 @@ export const MultiplayerGame = () => {
       );
       //does not end player one turn
     }
-    console.log("player one turn" + playerOneTurnCounter);
-    console.log("player two turn" + playerTwoTurnCounter);
   };
 
   const endTurn = () => {
