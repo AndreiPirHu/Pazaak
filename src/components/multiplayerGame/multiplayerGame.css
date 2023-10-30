@@ -144,11 +144,17 @@ body {
   transition: all 1s;
 }
 
-#card-slot-image {
+.card-slot-image {
   height: 100%;
   width: 100%;
   background-size: cover;
   border-radius: 0.2rem;
+  position: relative;
+}
+
+.extra-cards-container .card-slot-image:hover {
+  transition: all 0.5s;
+  transform: translate(0, -0.6em);
 }
 
 .NormalCard\+1\.png {
@@ -204,28 +210,46 @@ body {
 }
 .ExtraCard-1\.png {
   background-image: url("/src/assets/ExtraCard-1.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard-2\.png {
   background-image: url("/src/assets/ExtraCard-2.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard-3\.png {
   background-image: url("/src/assets/ExtraCard-3.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard-4\.png {
   background-image: url("/src/assets/ExtraCard-4.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard\+1\.png {
   background-image: url("/src/assets/ExtraCard+1.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard\+2\.png {
   background-image: url("/src/assets/ExtraCard+2.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard\+3\.png {
   background-image: url("/src/assets/ExtraCard+3.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard\+4\.png {
   background-image: url("/src/assets/ExtraCard+4.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }
 .ExtraCard\+5\.png {
   background-image: url("/src/assets/ExtraCard+5.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
 }

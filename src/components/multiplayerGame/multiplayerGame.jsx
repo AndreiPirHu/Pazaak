@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./multiplayerGame.css";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../features/extraCards";
 
 export const MultiplayerGame = () => {
   const [playerOneTurn, setPlayerOneTurn] = useState(true);
@@ -11,8 +13,6 @@ export const MultiplayerGame = () => {
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [currentPlayerScore, setCurrentPlayerScore] = useState(0);
   const [cardClasses, setCardClasses] = useState({});
-  const [playerOneExtraCards, setPlayerOneExtraCards] = useState({});
-  const [playerTwoExtraCards, setPlayerTwoExtraCards] = useState({});
   const playerOneScoreClass =
     playerOneScore > 20 ? "highScoreColor" : "lowScoreColor";
 
@@ -67,6 +67,87 @@ export const MultiplayerGame = () => {
         return 9;
       case "NormalCard+10.png":
         return 10;
+    }
+  };
+
+  const dispatch = useDispatch();
+
+  let extraCards = useSelector((state) => state.extraCards);
+
+  const useExtraCard = (cardKey) => {
+    //get the card name
+    let cardName = extraCards[cardKey];
+    //stops func if card already used
+    if (cardName == "") {
+      console.log("returned");
+      return;
+    }
+    //score added from extra card
+    let extraScore = 0;
+
+    //add the score
+    switch (cardName) {
+      case "ExtraCard-1.png":
+        extraScore = -1;
+        break;
+      case "ExtraCard-2.png":
+        extraScore = -2;
+        break;
+      case "ExtraCard-3.png":
+        extraScore = -3;
+        break;
+      case "ExtraCard-4.png":
+        extraScore = -4;
+        break;
+      case "ExtraCard+1.png":
+        extraScore = 1;
+        break;
+      case "ExtraCard+2.png":
+        extraScore = 2;
+        break;
+      case "ExtraCard+3.png":
+        extraScore = 3;
+        break;
+      case "ExtraCard+4.png":
+        extraScore = 4;
+        break;
+      case "ExtraCard+5.png":
+        extraScore = 5;
+        break;
+    }
+
+    if (playerOneTurn) {
+      //updated turncounter for correct card slot
+      let updatedTurnCounter = playerOneTurnCounter + 1;
+      //checks turn to add the right card
+      let p1CardSlot = `p1c${updatedTurnCounter}`;
+      //adds the right card class to the right card-slot element
+      setCardClasses((prevState) => {
+        return { ...prevState, [p1CardSlot]: cardName };
+      });
+
+      setPlayerOneScore(playerOneScore + extraScore);
+      //remove the already used card from the array
+      dispatch(actions.removeCard(cardKey));
+
+      //player turn counter to new one
+      setPlayerOneTurnCounter(updatedTurnCounter);
+    } else {
+      //updated turncounter for correct card slot
+      let updatedTurnCounter = playerTwoTurnCounter + 1;
+      //checks turn to add the right card
+      let p2CardSlot = `p2c${updatedTurnCounter}`;
+      //adds the right card class to the right card-slot element
+      setCardClasses((prevState) => {
+        return { ...prevState, [p2CardSlot]: cardName };
+      });
+
+      setPlayerTwoScore(playerTwoScore + extraScore);
+      //remove the already used card from the array
+      dispatch(actions.removeCard(cardKey));
+
+      //player turn counter to new one
+      setPlayerTwoTurnCounter(updatedTurnCounter);
     }
   };
 
@@ -223,66 +304,6 @@ export const MultiplayerGame = () => {
     }
   };
 
-  const endTurn = () => {
-    //random number for the next card
-    let newCard = Math.floor(Math.random() * playerOneDeck.length);
-
-    if (!playerOneTurn) {
-      //checks turn to add the right card
-      let p1CardSlot = `p1c${playerOneTurnCounter}`;
-
-      //adds the right card class to the right card-slot element
-      setCardClasses((prevState) => {
-        return { ...prevState, [p1CardSlot]: playerOneDeck[newCard] };
-      });
-
-      //add the score
-      setPlayerOneScore(playerOneScore + scoreCounter(playerOneDeck[newCard]));
-
-      //remove the already used card from the array
-      setPlayerOneDeck(
-        //filters the card in the array that is at the correct index point
-        playerOneDeck.filter((_, index) => index !== newCard)
-      );
-
-      //Checks if player 2 has pressed stand before passing turn, otherwise p1 replays
-      if (playerTwoStand) {
-        setPlayerOneTurnCounter(playerOneTurnCounter + 1);
-      } else {
-        //player turn counter +1 for next card slot
-        setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
-        //end player 1 turn
-        setPlayerOneTurn(!playerOneTurn);
-      }
-    } else {
-      //checks turn to add the right card
-      let p2CardSlot = `p2c${playerTwoTurnCounter}`;
-
-      //adds the right card class to the right card-slot element
-      setCardClasses((prevState) => {
-        return { ...prevState, [p2CardSlot]: playerTwoDeck[newCard] };
-      });
-
-      //add the score
-      setPlayerTwoScore(playerTwoScore + scoreCounter(playerTwoDeck[newCard]));
-
-      //remove the already used card from the array
-      setPlayerTwoDeck(
-        //filters the card in the array that is at the correct index point
-        playerTwoDeck.filter((_, index) => index !== newCard)
-      );
-      //Checks if player 2 has pressed stand before passing turn, otherwise p1 replays
-      if (playerOneStand) {
-        setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
-      } else {
-        //player turn counter +1 for next card slot
-        setPlayerOneTurnCounter(playerOneTurnCounter + 1);
-        //end player 2 turn
-        setPlayerOneTurn(!playerOneTurn);
-      }
-    }
-  };
-
   useEffect(() => {
     //checks if both players have pressed stand and then checks win conditions
     if (playerOneStand && playerTwoStand) {
@@ -313,82 +334,110 @@ export const MultiplayerGame = () => {
       <div className={`playerTwoBoard ${playerOneTurn ? "" : "activeBorder"}`}>
         <div className="card-container">
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c1}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c1}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c2}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c2}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c3}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c3}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c4}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c4}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c5}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c5}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c6}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c6}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c7}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c7}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c8}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c8}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p2c9}`}></div>
+            <div className={` card-slot-image ${cardClasses.p2c9}`}></div>
           </div>
           <div className={`playerScore ${playerTwoScoreClass}`}>
             {playerTwoScore}
           </div>
         </div>
         <div className="extra-cards-container">
-          <div className="extra-card-slot card-slot"></div>
-          <div className="extra-card-slot card-slot"></div>
-          <div className="extra-card-slot card-slot"></div>
+          <div
+            onClick={() => (!playerOneTurn ? useExtraCard("p2Extra1") : null)}
+            className="extra-card-slot card-slot"
+          >
+            <div className={` card-slot-image ${extraCards.p2Extra1}`}></div>
+          </div>
+          <div
+            onClick={() => (!playerOneTurn ? useExtraCard("p2Extra2") : null)}
+            className="extra-card-slot card-slot"
+          >
+            <div className={` card-slot-image ${extraCards.p2Extra2}`}></div>
+          </div>
+          <div
+            onClick={() => (!playerOneTurn ? useExtraCard("p2Extra3") : null)}
+            className="extra-card-slot card-slot"
+          >
+            <div className={` card-slot-image ${extraCards.p2Extra3}`}></div>
+          </div>
         </div>
       </div>
       <div id="board-divider"></div>
       <div className={`playerOneBoard ${playerOneTurn ? "activeBorder" : ""}`}>
         <div className="card-container">
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c1}`}></div>
+            <div className={`card-slot-image ${cardClasses.p1c1}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c2}`}></div>
+            <div className={` card-slot-image ${cardClasses.p1c2}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c3}`}></div>
+            <div className={` card-slot-image ${cardClasses.p1c3}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c4}`}></div>
+            <div className={` card-slot-image ${cardClasses.p1c4}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c5}`}></div>
+            <div className={` card-slot-image ${cardClasses.p1c5}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c6}`}></div>
+            <div className={` card-slot-image ${cardClasses.p1c6}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c7}`}></div>
+            <div className={`card-slot-image ${cardClasses.p1c7}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c8}`}></div>
+            <div className={` card-slot-image ${cardClasses.p1c8}`}></div>
           </div>
           <div className={`card-slot`}>
-            <div id="card-slot-image" className={`${cardClasses.p1c9}`}></div>
+            <div className={` card-slot-image ${cardClasses.p1c9}`}></div>
           </div>
           <div className={`playerScore ${playerOneScoreClass}`}>
             {playerOneScore}
           </div>
         </div>
         <div className="extra-cards-container">
-          <div className="extra-card-slot card-slot">
-            <div id="card-slot-image" className={`${cardClasses.p1c7}`}></div>
+          <div
+            onClick={() => (playerOneTurn ? useExtraCard("p1Extra1") : null)}
+            className="extra-card-slot card-slot"
+          >
+            <div className={` card-slot-image ${extraCards.p1Extra1}`}></div>
           </div>
-          <div className="extra-card-slot card-slot"></div>
-          <div className="extra-card-slot card-slot"></div>
+          <div
+            onClick={() => (playerOneTurn ? useExtraCard("p1Extra2") : null)}
+            className="extra-card-slot card-slot"
+          >
+            <div className={` card-slot-image ${extraCards.p1Extra2}`}></div>
+          </div>
+          <div
+            onClick={() => (playerOneTurn ? useExtraCard("p1Extra3") : null)}
+            className="extra-card-slot card-slot"
+          >
+            <div className={` card-slot-image ${extraCards.p1Extra3}`}></div>
+          </div>
         </div>
       </div>
       <div id="buttons-container">
