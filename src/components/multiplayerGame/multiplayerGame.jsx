@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./multiplayerGame.css";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../features/extraCards";
+import Popup from "../popup/popup";
 
 export const MultiplayerGame = () => {
   const [playerOneTurn, setPlayerOneTurn] = useState(true);
@@ -13,6 +14,8 @@ export const MultiplayerGame = () => {
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [currentPlayerScore, setCurrentPlayerScore] = useState(0);
   const [cardClasses, setCardClasses] = useState({});
+  const [triggerPopup, setTriggerPopup] = useState(false);
+  const [popupText, setPopupText] = useState("");
   const playerOneScoreClass =
     playerOneScore > 20 ? "highScoreColor" : "lowScoreColor";
 
@@ -73,6 +76,13 @@ export const MultiplayerGame = () => {
   const dispatch = useDispatch();
 
   let extraCards = useSelector((state) => state.extraCards);
+
+  const nextRound = (winner) => {
+    //add score to correct winner
+    //check if one player has 3 points = wins
+    //set popup to true
+    //reset game board and score to restart
+  };
 
   const useExtraCard = (cardKey) => {
     //get the card name
@@ -438,6 +448,11 @@ export const MultiplayerGame = () => {
           >
             <div className={` card-slot-image ${extraCards.p1Extra3}`}></div>
           </div>
+          <div className="score-container">
+            <div className={`score-circle ${""}`}></div>
+            <div className="score-circle"></div>
+            <div className="score-circle"></div>
+          </div>
         </div>
       </div>
       <div id="buttons-container">
@@ -454,6 +469,10 @@ export const MultiplayerGame = () => {
           <span>End Turn</span>
         </button>
       </div>
+
+      <Popup trigger={triggerPopup} setTrigger={setTriggerPopup}>
+        popupText
+      </Popup>
     </div>
   );
 };

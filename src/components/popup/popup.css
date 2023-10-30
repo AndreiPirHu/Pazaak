@@ -1,0 +1,69 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-inner {
+  position: relative;
+  padding: 32px;
+  width: 70%;
+  max-width: 640px;
+  background-color: #212121;
+  color: white;
+  border-radius: 30px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.35);
+  display: grid;
+  justify-content: center;
+}
+
+.popup-text {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.popup-inner .game-button {
+  padding: 0.1em 0.25em;
+  width: 13em;
+  height: 4.2em;
+  background-color: #212121;
+  border: 0.08em solid #fff;
+  border-radius: 0.3em;
+  font-size: 8px;
+  margin: 0 0.5rem;
+}
+
+.popup-inner .game-button span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0.4em;
+  width: 8.25em;
+  height: 2.5em;
+  background-color: #212121;
+  border-radius: 0.2em;
+  font-size: 1.5em;
+  color: #fff;
+  border: 0.08em solid #fff;
+  box-shadow: 0 0.4em 0.1em 0.019em #fff;
+  cursor: pointer;
+}
+
+.popup-inner .game-button span:hover {
+  transition: all 0.5s;
+  transform: translate(0, 0.4em);
+  box-shadow: 0 0 0 0 #fff;
+}
+
+.popup-inner .game-button span:not(hover) {
+  transition: all 1s;
+}

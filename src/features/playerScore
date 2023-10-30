@@ -1,0 +1,23 @@
+import { createAction, createReducer } from "@reduxjs/toolkit";
+
+const raiseScore = createAction("Raises player score");
+const resetScore = createAction("Resets score for all");
+
+const actions = (raiseScore, resetScore);
+
+const initialState = {
+  p1GameScore: 0,
+  p2GameScore: 0,
+};
+
+const reducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(raiseScore, (state, action) => ({
+      ...state,
+      [action.payload]: state[action.payload] + 1,
+    }))
+
+    .addCase(resetScore, (state, action) => initialState);
+});
+
+export { reducer, actions };

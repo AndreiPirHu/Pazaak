@@ -1,8 +1,10 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-const addCard = createAction("Add chosen card to player", (key, value) => ({
+const addCard = createAction(
+  "Add chosen card to player" /*, (key, value) => ({
   payload: { key, value },
-}));
+})*/
+);
 const removeCard = createAction("Remove used card from player hand");
 
 const actions = { addCard, removeCard };
