@@ -15,38 +15,39 @@ export const MultiplayerGame = () => {
   const [currentPlayerScore, setCurrentPlayerScore] = useState(0);
   const [cardClasses, setCardClasses] = useState({});
   const [triggerPopup, setTriggerPopup] = useState(false);
-  const [popupText, setPopupText] = useState("");
+  const [popupText, setPopupText] = useState({
+    title: "",
+    text: "",
+  });
+  const [playerOneWins, setPlayerOneWins] = useState(0);
+  const [playerTwoWins, setPlayerTwoWins] = useState(0);
+
+  const originalDeck = [
+    "NormalCard+1.png",
+    "NormalCard+2.png",
+    "NormalCard+3.png",
+    "NormalCard+4.png",
+    "NormalCard+5.png",
+    "NormalCard+6.png",
+    "NormalCard+7.png",
+    "NormalCard+8.png",
+    "NormalCard+9.png",
+    "NormalCard+10.png",
+  ];
+
   const playerOneScoreClass =
     playerOneScore > 20 ? "highScoreColor" : "lowScoreColor";
 
   const playerTwoScoreClass =
     playerTwoScore > 20 ? "highScoreColor" : "lowScoreColor";
 
-  const [playerOneDeck, setPlayerOneDeck] = useState([
-    "NormalCard+1.png",
-    "NormalCard+2.png",
-    "NormalCard+3.png",
-    "NormalCard+4.png",
-    "NormalCard+5.png",
-    "NormalCard+6.png",
-    "NormalCard+7.png",
-    "NormalCard+8.png",
-    "NormalCard+9.png",
-    "NormalCard+10.png",
-  ]);
+  const [playerOneDeck, setPlayerOneDeck] = useState(originalDeck);
 
-  const [playerTwoDeck, setPlayerTwoDeck] = useState([
-    "NormalCard+1.png",
-    "NormalCard+2.png",
-    "NormalCard+3.png",
-    "NormalCard+4.png",
-    "NormalCard+5.png",
-    "NormalCard+6.png",
-    "NormalCard+7.png",
-    "NormalCard+8.png",
-    "NormalCard+9.png",
-    "NormalCard+10.png",
-  ]);
+  const [playerTwoDeck, setPlayerTwoDeck] = useState(originalDeck);
+
+  const dispatch = useDispatch();
+
+  let extraCards = useSelector((state) => state.extraCards);
 
   const scoreCounter = (card) => {
     switch (card) {
@@ -73,15 +74,66 @@ export const MultiplayerGame = () => {
     }
   };
 
-  const dispatch = useDispatch();
-
-  let extraCards = useSelector((state) => state.extraCards);
+  const resetBoard = () => {
+    //reset game board
+    //reset board card arrays to empty again
+    setCardClasses({});
+    //reset arrays with cardnames to full again
+    setPlayerOneDeck(originalDeck);
+    setPlayerTwoDeck(originalDeck);
+    //reset score
+    setPlayerOneScore(0);
+    setPlayerTwoScore(0);
+    //reset turn counter
+    setPlayerOneTurnCounter(1);
+    setPlayerTwoTurnCounter(1);
+    //reset player stand booleans
+    setPlayerOneStand(false);
+    setPlayerTwoStand(false);
+    //set turn to player one
+    setPlayerOneTurn(true);
+    //trigger StartGame function
+  };
 
   const nextRound = (winner) => {
+    //if there is a winner with 3 points, game ends
+    if (
+      (winner == "playerOne" && playerOneWins == 2) ||
+      (winner == "playerTwo" && playerTwoWins == 2)
+    ) {
+      TODO;
+      //Go to winner screen???
+      //maybe different popup that takes you to main screen again?
+      return;
+    }
+
+    setPopupText((prevState) => ({
+      ...prevState,
+      title: `${winner} won this round!`,
+      text: `Ready for the next round?`,
+    }));
+    //checks if it is a tie or else who won
+
     //add score to correct winner
-    //check if one player has 3 points = wins
-    //set popup to true
-    //reset game board and score to restart
+    switch (winner) {
+      case "tie":
+        setPopupText((prevState) => ({
+          ...prevState,
+          title: `Tie!`,
+          text: `Ready for the next round?`,
+        }));
+        break;
+      case "playerOne":
+        setPlayerOneWins(playerOneWins + 1);
+        break;
+      case "playerTwo":
+        setPlayerTwoWins(playerTwoWins + 1);
+        break;
+    }
+    //reset game
+    resetBoard();
+    //brings up popup
+    setTriggerPopup(true);
   };
 
   const useExtraCard = (cardKey) => {
@@ -168,7 +220,7 @@ export const MultiplayerGame = () => {
     } else {
       setPlayerTwoStand(true);
     }
-    //change triggers useEffect that ends the turn
+    //changes triggers useEffect that ends the turn
   };
 
   const checkForOver20 = () => {
@@ -181,6 +233,7 @@ export const MultiplayerGame = () => {
   };
 
   const checkFor20 = () => {
+    //if a player gets 20 in score on their turn, they automatically stand
     if (
       (playerOneTurn && playerOneScore == 20) ||
       (!playerOneTurn && playerTwoScore == 20)
@@ -213,16 +266,21 @@ export const MultiplayerGame = () => {
     //1. check if player has over 20 for instant loss
     if (playerOneTurn) {
       if (playerOneScore > 20) {
-        TODO; //Player one loses
+        //Player one loses
+        //send player two as winner
+        nextRound("playerTwo");
+        return;
       }
     } else {
       if (playerTwoScore > 20) {
-        TODO; //Player two loses
+        //Player two loses
+        //send player one as winner
+        nextRound("playerOne");
+        return;
       }
     }
 
     //2. check if a player has pressed stand or not and set turn accordingly
-
     //2.1.1 go over to player 2 turn
 
     if (playerOneTurn && !playerTwoStand) {
@@ -317,7 +375,19 @@ export const MultiplayerGame = () => {
   useEffect(() => {
     //checks if both players have pressed stand and then checks win conditions
     if (playerOneStand && playerTwoStand) {
-      TODO; //winCondition chekc that checks if both players have 20 or who has closest to 20 and not over
+      //check if both have the same score = tie
+      if (playerOneScore === playerTwoScore) {
+        nextRound("tie");
+        return;
+      }
+      //check if one has higher than the other = winner
+      if (playerOneScore > playerTwoScore) {
+        nextRound("playerOne");
+        return;
+      } else {
+        nextRound("playerTwo");
+        return;
+      }
     } else if (playerOneStand || playerTwoStand) {
       if (playerOneStand) {
         setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
@@ -393,6 +463,23 @@ export const MultiplayerGame = () => {
           >
             <div className={` card-slot-image ${extraCards.p2Extra3}`}></div>
           </div>
+          <div className="score-container">
+            <div
+              className={`score-circle ${
+                playerTwoWins > 0 ? "score-circle-active" : ""
+              }`}
+            ></div>
+            <div
+              className={`score-circle ${
+                playerTwoWins > 1 ? "score-circle-active" : ""
+              }`}
+            ></div>
+            <div
+              className={`score-circle ${
+                playerTwoWins > 2 ? "score-circle-active" : ""
+              }`}
+            ></div>
+          </div>
         </div>
       </div>
       <div id="board-divider"></div>
@@ -449,9 +536,21 @@ export const MultiplayerGame = () => {
             <div className={` card-slot-image ${extraCards.p1Extra3}`}></div>
           </div>
           <div className="score-container">
-            <div className={`score-circle ${""}`}></div>
-            <div className="score-circle"></div>
-            <div className="score-circle"></div>
+            <div
+              className={`score-circle ${
+                playerOneWins > 0 ? "score-circle-active" : ""
+              }`}
+            ></div>
+            <div
+              className={`score-circle ${
+                playerOneWins > 1 ? "score-circle-active" : ""
+              }`}
+            ></div>
+            <div
+              className={`score-circle ${
+                playerOneWins > 2 ? "score-circle-active" : ""
+              }`}
+            ></div>
           </div>
         </div>
       </div>
@@ -470,8 +569,15 @@ export const MultiplayerGame = () => {
         </button>
       </div>
 
-      <Popup trigger={triggerPopup} setTrigger={setTriggerPopup}>
-        popupText
+      <Popup
+        trigger={triggerPopup}
+        setTrigger={setTriggerPopup}
+        startGame={startGame}
+      >
+        <div className="children-container">
+          <h3 className="children-container">{popupText.title}</h3>
+          <p className="children-container">{popupText.text}</p>
+        </div>
       </Popup>
     </div>
   );

@@ -89,6 +89,7 @@ body {
   justify-content: center;
   padding-left: 70px;
   position: relative;
+  height: 70px;
 }
 
 .score-container {
@@ -274,4 +275,16 @@ body {
   background-image: url("/src/assets/ExtraCard+5.png");
   position: relative;
   animation: cardAnimation 0.5s linear;
+}
+
+.popup-text {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.children-container {
+  display: grid;
+  justify-content: center;
 }

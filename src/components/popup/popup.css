@@ -38,7 +38,7 @@
   border: 0.08em solid #fff;
   border-radius: 0.3em;
   font-size: 8px;
-  margin: 0 0.5rem;
+  margin: 0 auto;
 }
 
 .popup-inner .game-button span {
@@ -66,4 +66,9 @@
 
 .popup-inner .game-button span:not(hover) {
   transition: all 1s;
+}
+
+.children-container {
+  display: grid;
+  justify-content: center;
 }
