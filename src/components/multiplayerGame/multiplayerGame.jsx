@@ -73,9 +73,8 @@ export const MultiplayerGame = () => {
         return 10;
     }
   };
-
+  //reset game board
   const resetBoard = () => {
-    //reset game board
     //reset board card arrays to empty again
     setCardClasses({});
     //reset arrays with cardnames to full again
@@ -92,7 +91,7 @@ export const MultiplayerGame = () => {
     setPlayerTwoStand(false);
     //set turn to player one
     setPlayerOneTurn(true);
-    //trigger StartGame function
+    //startGame function triggers when player presses next Round button in popup
   };
 
   const nextRound = (winner) => {
@@ -101,9 +100,20 @@ export const MultiplayerGame = () => {
       (winner == "playerOne" && playerOneWins == 2) ||
       (winner == "playerTwo" && playerTwoWins == 2)
     ) {
-      TODO;
-      //Go to winner screen???
-      //maybe different popup that takes you to main screen again?
+      setPopupText((prevState) => ({
+        ...prevState,
+        title: `${winner} won the game!!!`,
+        text: `Congratulations!`,
+      }));
+      //sets final score so game knows if it is the last round
+      if (winner === "playerOne") {
+        setPlayerOneWins(playerOneWins + 1);
+      } else {
+        setPlayerTwoWins(playerTwoWins + 1);
+      }
+      //triggers popup
+      setTriggerPopup(true);
+      //Go to winner screen through ternary in popup based on wins
       return;
     }
 
@@ -179,10 +189,21 @@ export const MultiplayerGame = () => {
     }
 
     if (playerOneTurn) {
-      //updated turncounter for correct card slot
-      let updatedTurnCounter = playerOneTurnCounter + 1;
-      //checks turn to add the right card
-      let p1CardSlot = `p1c${updatedTurnCounter}`;
+      //check if tuncounter is correct already before giving it +1 by checking if its spot in the object is empty or not
+      let p1CardSlot;
+      if (!playerTwoStand) {
+        //updated turncounter for correct card slot
+        let updatedTurnCounter = playerOneTurnCounter + 1;
+        //checks turn to add the right card
+        p1CardSlot = `p1c${updatedTurnCounter}`;
+        //player turn counter to new one
+        setPlayerOneTurnCounter(updatedTurnCounter);
+      } else {
+        p1CardSlot = `p1c${playerOneTurnCounter}`;
+        //player turn counter to new one
+        setPlayerOneTurnCounter(playerOneTurnCounter + 1);
+      }
+
       //adds the right card class to the right card-slot element
       setCardClasses((prevState) => {
         return { ...prevState, [p1CardSlot]: cardName };
@@ -191,14 +212,21 @@ export const MultiplayerGame = () => {
       setPlayerOneScore(playerOneScore + extraScore);
       //remove the already used card from the array
       dispatch(actions.removeCard(cardKey));
-
-      //player turn counter to new one
-      setPlayerOneTurnCounter(updatedTurnCounter);
     } else {
-      //updated turncounter for correct card slot
-      let updatedTurnCounter = playerTwoTurnCounter + 1;
-      //checks turn to add the right card
-      let p2CardSlot = `p2c${updatedTurnCounter}`;
+      //check if tuncounter is correct already before giving it +1 by checking if its spot in the object is empty or not
+      let p2CardSlot;
+      if (!playerOneStand) {
+        //updated turncounter for correct card slot
+        let updatedTurnCounter = playerTwoTurnCounter + 1;
+        //checks turn to add the right card
+        p2CardSlot = `p2c${updatedTurnCounter}`;
+        //player turn counter to new one
+        setPlayerTwoTurnCounter(updatedTurnCounter);
+      } else {
+        p2CardSlot = `p2c${playerTwoTurnCounter}`;
+        //player turn counter to new one
+        setPlayerTwoTurnCounter(playerTwoTurnCounter + 1);
+      }
       //adds the right card class to the right card-slot element
       setCardClasses((prevState) => {
         return { ...prevState, [p2CardSlot]: cardName };
@@ -207,9 +235,6 @@ export const MultiplayerGame = () => {
       setPlayerTwoScore(playerTwoScore + extraScore);
       //remove the already used card from the array
       dispatch(actions.removeCard(cardKey));
-
-      //player turn counter to new one
-      setPlayerTwoTurnCounter(updatedTurnCounter);
     }
   };
 
@@ -402,6 +427,7 @@ export const MultiplayerGame = () => {
   useEffect(() => {
     checkFor20();
     checkForOver20();
+    console.log(playerOneScore, playerTwoScore);
   }, [playerOneScore, playerTwoScore]);
 
   //Runs only once on first render
@@ -573,6 +599,8 @@ export const MultiplayerGame = () => {
         trigger={triggerPopup}
         setTrigger={setTriggerPopup}
         startGame={startGame}
+        playerOneWins={playerOneWins}
+        playerTwoWins={playerTwoWins}
       >
         <div className="children-container">
           <h3 className="children-container">{popupText.title}</h3>

@@ -1,6 +1,9 @@
 import "./popup.css";
 
 const Popup = (props) => {
+  let playerOneWins = props.playerOneWins;
+  let playerTwoWins = props.playerTwoWins;
+
   return props.trigger ? (
     <div className="popup">
       <div className="popup-inner">
@@ -10,11 +13,17 @@ const Popup = (props) => {
 
         <button
           onClick={() => {
-            props.setTrigger(false), props.startGame();
+            props.setTrigger(false);
+            if (playerOneWins === 3 || playerTwoWins === 3) {
+            } else {
+              props.startGame();
+            }
           }}
           className="game-button"
         >
-          <span>Next Round</span>
+          <span>
+            {playerOneWins === 3 || playerTwoWins === 3 ? "Home" : "Next Round"}
+          </span>
         </button>
       </div>
     </div>
