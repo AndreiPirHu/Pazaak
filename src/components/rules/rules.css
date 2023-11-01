@@ -13,6 +13,7 @@
   display: grid;
   justify-content: center;
   align-items: center;
+  max-width: 640px;
 }
 
 .Rules .text-container h1 {

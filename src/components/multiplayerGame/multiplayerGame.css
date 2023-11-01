@@ -5,6 +5,9 @@ body {
 #board {
   margin: 10px 10px;
   margin-top: 20px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }
 
 .playerOneBoard {
