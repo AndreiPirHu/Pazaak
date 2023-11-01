@@ -1,21 +1,18 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-const addCard = createAction(
-  "Add chosen card to player" /*, (key, value) => ({
-  payload: { key, value },
-})*/
-);
+const addCard = createAction("Add chosen card to player");
 const removeCard = createAction("Remove used card from player hand");
+const clearCards = createAction("Clears all cards");
 
-const actions = { addCard, removeCard };
+const actions = { addCard, removeCard, clearCards };
 
 const initialState = {
-  p1Extra1: "ExtraCard-1.png",
-  p1Extra2: "ExtraCard+4.png",
-  p1Extra3: "ExtraCard-3.png",
-  p2Extra1: "ExtraCard-2.png",
-  p2Extra2: "ExtraCard+3.png",
-  p2Extra3: "ExtraCard-4.png",
+  p1Extra1: "",
+  p1Extra2: "",
+  p1Extra3: "",
+  p2Extra1: "",
+  p2Extra2: "",
+  p2Extra3: "",
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,7 +25,8 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(removeCard, (state, action) => ({
       ...state,
       [action.payload]: "",
-    }));
+    }))
+    .addCase(clearCards, (state, actions) => initialState);
 });
 
 export { reducer, actions };

@@ -1,0 +1,13 @@
+.Loadout {
+  margin-top: 20px;
+}
+
+.Loadout .extra-cards-container {
+  padding-left: 0;
+}
+
+.Loadout .button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

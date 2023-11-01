@@ -4,7 +4,7 @@ import "./home.css";
 export const Home = () => {
   let navigate = useNavigate();
 
-  const navigateToMultiplayer = () => {
+  const navigateToLoadout = () => {
     navigate("/loadout");
   };
 
@@ -20,7 +20,7 @@ export const Home = () => {
         </div>
 
         <div className="button-container">
-          <button onClick={navigateToMultiplayer} className="game-button">
+          <button onClick={navigateToLoadout} className="game-button">
             <span>New Game</span>
           </button>
           <button onClick={navigateToRules} className="game-button">
