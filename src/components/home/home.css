@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+}
+.home {
+  height: 100vh;
+
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-family: "Heebo", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Orbitron", sans-serif;
+}
+
+.menu-container {
+  overflow: hidden;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+.menu-container .title-container {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 40px;
+  font-size: 1.2rem;
+}
+
+.menu-container .button-container {
+  display: grid;
+}
+
+.menu-container .button-container .game-button {
+  margin-top: 20px;
+}

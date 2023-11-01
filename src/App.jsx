@@ -1,5 +1,8 @@
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { MultiplayerGame } from "./components/multiplayerGame/multiplayerGame";
+import { Home } from "./components/home/home";
+import { Rules } from "./components/rules/rules";
+import { Loadout } from "./components/loadout/loadout";
 import "./App.css";
 
 function App() {
@@ -7,7 +10,10 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<MultiplayerGame />} />
+          <Route path="/game" element={<MultiplayerGame />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/rules" element={<Rules />} />
+          <Route path="/loadout" element={<Loadout />} />
         </Routes>
       </Router>
     </div>

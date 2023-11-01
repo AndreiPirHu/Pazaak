@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import "./popup.css";
 
 const Popup = (props) => {
   let playerOneWins = props.playerOneWins;
   let playerTwoWins = props.playerTwoWins;
+
+  let navigate = useNavigate();
+
+  const navigateToHome = () => {
+    navigate("/");
+  };
 
   return props.trigger ? (
     <div className="popup">
@@ -15,6 +22,7 @@ const Popup = (props) => {
           onClick={() => {
             props.setTrigger(false);
             if (playerOneWins === 3 || playerTwoWins === 3) {
+              navigateToHome();
             } else {
               props.startGame();
             }

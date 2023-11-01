@@ -189,7 +189,9 @@ export const MultiplayerGame = () => {
     }
 
     if (playerOneTurn) {
-      //check if tuncounter is correct already before giving it +1 by checking if its spot in the object is empty or not
+      //check if the other player is standing, changes how it interacts with turncounter depending.
+      //if other player is standing, it does not add a +1 to turncounter before adding the card. It does it after
+      //otherwise it adds the +1 before
       let p1CardSlot;
       if (!playerTwoStand) {
         //updated turncounter for correct card slot
