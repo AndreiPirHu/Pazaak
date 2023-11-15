@@ -168,12 +168,10 @@ export const SingleplayerGame = () => {
       //if score is lower than 20:
 
       //check if player 1 is standing and if own score is higher, stand if true.
-      if (playerOneStand && playerTwoScore >= playerOneScore) {
+      if (playerOneStand && playerTwoScore > playerOneScore) {
         playerStand();
 
-        console.log(
-          "stands because score higher than or equal to p1 and p1 is standing"
-        );
+        console.log("stands because score higher than p1 and p1 is standing");
         return;
       }
 
@@ -272,7 +270,14 @@ export const SingleplayerGame = () => {
             );
             return;
           } else {
-            //if there was no card that gave the desired score, the AI takes a chance on a new card instead
+            //Since no good options for winning are found, checks if they have the same score for a tie and stands if so
+            if (playerTwoScore == playerOneScore) {
+              playerStand();
+              console.log(
+                "standing because no good options for winning and there is a tie"
+              );
+            }
+            //if there was no card that gave the desired score and no tie, the AI takes a wild chance on a new card instead
             newEndTurn();
 
             console.log(
@@ -429,6 +434,7 @@ export const SingleplayerGame = () => {
     //reset arrays with cardnames to full again
     setPlayerOneDeck(originalDeck);
     setPlayerTwoDeck(originalDeck);
+
     //reset score
     setPlayerOneScore(0);
     setPlayerTwoScore(0);
@@ -619,24 +625,24 @@ export const SingleplayerGame = () => {
 
   const startGame = () => {
     //random number for the first card
-    let newCard = Math.floor(Math.random() * playerOneDeck.length);
+    let newCard = Math.floor(Math.random() * originalDeck.length);
     let p1CardSlot = "p1c1";
 
     //adds the right card class to the right card-slot element
     setCardClasses((prevState) => {
-      return { ...prevState, [p1CardSlot]: playerOneDeck[newCard] };
+      return { ...prevState, [p1CardSlot]: originalDeck[newCard] };
     });
 
     //add the score
     setPlayerOneScore(() => {
-      return 0 + scoreCounter(playerOneDeck[newCard]);
+      return 0 + scoreCounter(originalDeck[newCard]);
     });
 
     //remove the already used card from the array after adding the score
-    setPlayerOneDeck(
+    setPlayerOneDeck(() => {
       //filters the card in the array that is at the correct index point
-      playerOneDeck.filter((_, index) => index !== newCard)
-    );
+      return originalDeck.filter((_, index) => index !== newCard);
+    });
   };
 
   const newEndTurn = () => {
@@ -697,7 +703,9 @@ export const SingleplayerGame = () => {
         return { ...prevState, [p1CardSlot]: playerOneDeck[newCard] };
       });
       //add the score
-      setPlayerOneScore(playerOneScore + scoreCounter(playerOneDeck[newCard]));
+      setPlayerOneScore((prevState) => {
+        return prevState + scoreCounter(playerOneDeck[newCard]);
+      });
       //remove the already used card from the array
       setPlayerOneDeck(
         //filters the card in the array that is at the correct index point
@@ -785,6 +793,7 @@ export const SingleplayerGame = () => {
     checkFor20();
     checkForOver20();
     console.log(playerOneScore, playerTwoScore);
+    console.log(playerOneDeck);
   }, [playerOneScore, playerTwoScore]);
 
   useEffect(() => {

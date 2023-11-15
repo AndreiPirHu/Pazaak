@@ -272,24 +272,24 @@ export const MultiplayerGame = () => {
 
   const startGame = () => {
     //random number for the first card
-    let newCard = Math.floor(Math.random() * playerOneDeck.length);
+    let newCard = Math.floor(Math.random() * originalDeck.length);
     let p1CardSlot = "p1c1";
 
     //adds the right card class to the right card-slot element
     setCardClasses((prevState) => {
-      return { ...prevState, [p1CardSlot]: playerOneDeck[newCard] };
+      return { ...prevState, [p1CardSlot]: originalDeck[newCard] };
     });
 
     //add the score
     setPlayerOneScore(() => {
-      return 0 + scoreCounter(playerOneDeck[newCard]);
+      return 0 + scoreCounter(originalDeck[newCard]);
     });
 
     //remove the already used card from the array after adding the score
-    setPlayerOneDeck(
+    setPlayerOneDeck(() => {
       //filters the card in the array that is at the correct index point
-      playerOneDeck.filter((_, index) => index !== newCard)
-    );
+      return originalDeck.filter((_, index) => index !== newCard);
+    });
   };
 
   const newEndTurn = () => {
@@ -347,7 +347,9 @@ export const MultiplayerGame = () => {
         return { ...prevState, [p1CardSlot]: playerOneDeck[newCard] };
       });
       //add the score
-      setPlayerOneScore(playerOneScore + scoreCounter(playerOneDeck[newCard]));
+      setPlayerOneScore((prevState) => {
+        return prevState + scoreCounter(playerOneDeck[newCard]);
+      });
       //remove the already used card from the array
       setPlayerOneDeck(
         //filters the card in the array that is at the correct index point
