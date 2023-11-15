@@ -1,0 +1,355 @@
+body {
+  background-color: #212121;
+}
+
+#board {
+  margin: 10px 10px;
+  margin-top: 20px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.playerOneBoard {
+  padding-top: 10px;
+}
+
+.playerTwoBoard {
+  padding-top: 10px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(5, 3rem);
+  gap: 0.8rem;
+  justify-content: center;
+  margin-left: auto;
+}
+@keyframes borderAnimation {
+  0% {
+    box-shadow: 0 0 0 0 #afebaf;
+  }
+  50% {
+    box-shadow: 0 0 0 5px #5cec74;
+  }
+  100% {
+    box-shadow: 0 0 0 10 #07f02e;
+  }
+}
+
+@keyframes cardAnimation {
+  0% {
+    right: 100vw;
+  }
+
+  50% {
+    right: 20px;
+  }
+  60% {
+    right: 0px;
+  }
+  70% {
+    right: 10px;
+  }
+
+  100% {
+    right: 0px;
+  }
+}
+
+.activeBorder {
+  border-radius: 3rem;
+  animation: borderAnimation 3s infinite linear;
+}
+
+.card-slot {
+  border-radius: 0.4rem;
+  border: 2px solid #d9d9d9;
+  height: 4rem;
+  width: 3rem;
+  background-size: cover;
+}
+
+.playerScore {
+  display: flex;
+  font-size: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #d9d9d9;
+  border-radius: 4rem;
+  height: 3rem;
+  margin: auto 0;
+}
+
+.lowScoreColor {
+  color: #07f02e;
+}
+
+.highScoreColor {
+  color: red;
+}
+
+.extra-cards-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  justify-content: center;
+  padding-left: 70px;
+  position: relative;
+  height: 70px;
+}
+
+.score-container {
+  display: grid;
+  width: 52px;
+  justify-content: center;
+  position: relative;
+  top: -30px;
+}
+
+.score-circle {
+  background-color: gray;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  margin-top: 12px;
+}
+
+.score-circle-active {
+  background-color: #07f02e;
+}
+
+#board-divider {
+  border: 2px solid white;
+  margin: 1rem;
+}
+
+#buttons-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.game-button {
+  padding: 0.1em 0.25em;
+  width: 13em;
+  height: 4.2em;
+  background-color: #212121;
+  border: 0.08em solid #fff;
+  border-radius: 0.3em;
+  font-size: 12px;
+  margin: 0 0.5rem;
+}
+
+.game-button span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0.4em;
+  width: 8.25em;
+  height: 2.5em;
+  background-color: #212121;
+  border-radius: 0.2em;
+  font-size: 1.5em;
+  color: #fff;
+  border: 0.08em solid #fff;
+  box-shadow: 0 0.4em 0.1em 0.019em #fff;
+  cursor: pointer;
+}
+
+#button-disabled {
+  transition: all 0.5s;
+  transform: translate(0, 0.4em);
+  box-shadow: none;
+}
+
+.game-button span:hover {
+  transition: all 0.5s;
+  transform: translate(0, 0.4em);
+  box-shadow: 0 0 0 0 #fff;
+}
+
+.game-button span:not(hover) {
+  transition: all 1s;
+}
+
+.card-slot-image {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  border-radius: 0.2rem;
+  position: relative;
+}
+
+.extra-cards-container .card-slot-image:hover {
+  transition: all 0.5s;
+  transform: translate(0, -0.6em);
+}
+
+.NormalCard\+1\.png {
+  background-image: url("/src/assets/NormalCard+1.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+
+.NormalCard\+2\.png {
+  background-image: url("/src/assets/NormalCard+2.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+3\.png {
+  background-image: url("/src/assets/NormalCard+3.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+4\.png {
+  background-image: url("/src/assets/NormalCard+4.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+5\.png {
+  background-image: url("/src/assets/NormalCard+5.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+6\.png {
+  background-image: url("/src/assets/NormalCard+6.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+7\.png {
+  background-image: url("/src/assets/NormalCard+7.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+8\.png {
+  background-image: url("/src/assets/NormalCard+8.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+9\.png {
+  background-image: url("/src/assets/NormalCard+9.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.NormalCard\+10\.png {
+  background-image: url("/src/assets/NormalCard+10.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard-1\.png {
+  background-image: url("/src/assets/ExtraCard-1.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard-2\.png {
+  background-image: url("/src/assets/ExtraCard-2.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard-3\.png {
+  background-image: url("/src/assets/ExtraCard-3.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard-4\.png {
+  background-image: url("/src/assets/ExtraCard-4.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard\+1\.png {
+  background-image: url("/src/assets/ExtraCard+1.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard\+2\.png {
+  background-image: url("/src/assets/ExtraCard+2.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard\+3\.png {
+  background-image: url("/src/assets/ExtraCard+3.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard\+4\.png {
+  background-image: url("/src/assets/ExtraCard+4.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+.ExtraCard\+5\.png {
+  background-image: url("/src/assets/ExtraCard+5.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+
+.popup-text {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.children-container {
+  display: grid;
+  justify-content: center;
+}
+
+.puff-in-center {
+  -webkit-animation: puff-in-center 0.3s cubic-bezier(0.47, 0, 0.745, 0.715)
+    both;
+  animation: puff-in-center 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+}
+@-webkit-keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+.stand-overlay {
+  position: fixed;
+
+  color: red;
+  font-size: 3rem;
+  font-family: "Black Ops One", sans-serif;
+  z-index: 100;
+}
+
+#p1-stand-overlay {
+  top: 60vh;
+  right: 20vw;
+}
+
+#p2-stand-overlay {
+  top: 15vh;
+  right: 20vw;
+}

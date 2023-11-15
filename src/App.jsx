@@ -3,6 +3,7 @@ import { MultiplayerGame } from "./components/multiplayerGame/multiplayerGame";
 import { Home } from "./components/home/home";
 import { Rules } from "./components/rules/rules";
 import { Loadout } from "./components/loadout/loadout";
+import { SingleplayerGame } from "./components/singleplayerGame/singleplayerGame";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/loadout" element={<Loadout />} />
+          <Route path="/singleplayer" element={<SingleplayerGame />} />
         </Routes>
       </Router>
     </div>
