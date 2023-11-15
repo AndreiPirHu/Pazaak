@@ -296,3 +296,60 @@ body {
   display: grid;
   justify-content: center;
 }
+
+.puff-in-center {
+  -webkit-animation: puff-in-center 0.3s cubic-bezier(0.47, 0, 0.745, 0.715)
+    both;
+  animation: puff-in-center 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+}
+@-webkit-keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+.stand-overlay {
+  position: fixed;
+
+  color: red;
+  font-size: 3rem;
+  font-family: "Black Ops One", sans-serif;
+  z-index: 100;
+}
+
+#p1-stand-overlay {
+  top: 60vh;
+  right: 20vw;
+}
+
+#p2-stand-overlay {
+  top: 15vh;
+  right: 20vw;
+}

@@ -423,6 +423,7 @@ export const SingleplayerGame = () => {
   };
   //reset game board
   const resetBoard = () => {
+    setTimeout(() => {}, 1000);
     //reset board card arrays to empty again
     setCardClasses({});
     //reset arrays with cardnames to full again

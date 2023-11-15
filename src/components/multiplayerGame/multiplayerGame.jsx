@@ -440,6 +440,13 @@ export const MultiplayerGame = () => {
   return (
     <div id="board">
       <div className={`playerTwoBoard ${playerOneTurn ? "" : "activeBorder"}`}>
+        {playerTwoStand ? (
+          <div id="p2-stand-overlay" className="stand-overlay puff-in-center">
+            STANDING
+          </div>
+        ) : (
+          ""
+        )}
         <div className="card-container">
           <div className={`card-slot`}>
             <div className={` card-slot-image ${cardClasses.p2c1}`}></div>
@@ -512,6 +519,13 @@ export const MultiplayerGame = () => {
       </div>
       <div id="board-divider"></div>
       <div className={`playerOneBoard ${playerOneTurn ? "activeBorder" : ""}`}>
+        {playerOneStand ? (
+          <div id="p1-stand-overlay" className="stand-overlay puff-in-center">
+            STANDING
+          </div>
+        ) : (
+          ""
+        )}
         <div className="card-container">
           <div className={`card-slot`}>
             <div className={`card-slot-image ${cardClasses.p1c1}`}></div>
