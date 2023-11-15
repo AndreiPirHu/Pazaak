@@ -188,6 +188,7 @@ export const SingleplayerLoadout = () => {
   }, [extraCards]);
 
   useEffect(() => {
+    dispatch(actions.clearCards());
     dispatch(actions.setAICards());
   }, []);
 
