@@ -1,15 +1,13 @@
-import "./loadout.css";
+import "./multiplayerLoadout.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../features/extraCards";
 import { useNavigate } from "react-router-dom";
-import Popup from "../popup/popup";
 
-export const Loadout = () => {
+export const MultiplayerLoadout = () => {
   const p1ExtraCardsKeys = ["p1Extra1", "p1Extra2", "p1Extra3"];
   const p2ExtraCardsKeys = ["p2Extra1", "p2Extra2", "p2Extra3"];
 
-  const [triggerPopup, setTriggerPopup] = useState(true);
   const [p1ExtraCardsDeck, setP1ExtraCardsDeck] = useState({
     p1c1: "ExtraCard+1.png",
     p1c2: "ExtraCard+2.png",
@@ -181,7 +179,7 @@ export const Loadout = () => {
   };
 
   const navigateToMultiplayer = () => {
-    navigate("/game");
+    navigate("/multiplayer");
   };
 
   useEffect(() => {
@@ -193,7 +191,7 @@ export const Loadout = () => {
     dispatch(actions.clearCards());
   }, []);
   return (
-    <div className="Loadout">
+    <div className="MultiplayerLoadout">
       <div className="board">
         <div className="card-container">
           <div
@@ -366,15 +364,6 @@ export const Loadout = () => {
           ""
         )}
       </div>
-      {
-        //Add the popup when Popup has been changed so all values are sent in and button text changed
-        /*<Popup trigger={triggerPopup} setTrigger={setTriggerPopup}>
-        <div className="children-container">
-          <h3 className="children-container">{popupText.title}</h3>
-          <p className="children-container">{popupText.text}</p>
-        </div>
-        </Popup>*/
-      }
     </div>
   );
 };

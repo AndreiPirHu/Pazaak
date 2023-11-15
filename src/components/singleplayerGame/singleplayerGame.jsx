@@ -490,7 +490,7 @@ export const SingleplayerGame = () => {
         break;
     }
     //reset game
-    resetBoard();
+    //resetBoard();
     //brings up popup
     setTriggerPopup(true);
   };
@@ -628,7 +628,9 @@ export const SingleplayerGame = () => {
     });
 
     //add the score
-    setPlayerOneScore(playerOneScore + scoreCounter(playerOneDeck[newCard]));
+    setPlayerOneScore(() => {
+      return 0 + scoreCounter(playerOneDeck[newCard]);
+    });
 
     //remove the already used card from the array after adding the score
     setPlayerOneDeck(
@@ -802,7 +804,7 @@ export const SingleplayerGame = () => {
       <div className={`playerTwoBoard ${playerOneTurn ? "" : "activeBorder"}`}>
         {playerTwoStand ? (
           <div id="p2-stand-overlay" className="stand-overlay puff-in-center">
-            STANDING
+            <h3>STANDING</h3>
           </div>
         ) : (
           ""
@@ -842,13 +844,25 @@ export const SingleplayerGame = () => {
         </div>
         <div className="extra-cards-container">
           <div className="extra-card-slot card-slot">
-            <div className={` card-slot-image ${extraCards.p2Extra1}`}></div>
+            <div
+              className={` card-slot-image ${
+                extraCards.p2Extra1 !== "" ? "ExtraCardHidden.png" : ""
+              }`}
+            ></div>
           </div>
           <div className="extra-card-slot card-slot">
-            <div className={` card-slot-image ${extraCards.p2Extra2}`}></div>
+            <div
+              className={` card-slot-image ${
+                extraCards.p2Extra2 !== "" ? "ExtraCardHidden.png" : ""
+              }`}
+            ></div>
           </div>
           <div className="extra-card-slot card-slot">
-            <div className={` card-slot-image ${extraCards.p2Extra3}`}></div>
+            <div
+              className={` card-slot-image ${
+                extraCards.p2Extra3 !== "" ? "ExtraCardHidden.png" : ""
+              }`}
+            ></div>
           </div>
           <div className="score-container">
             <div
@@ -873,7 +887,7 @@ export const SingleplayerGame = () => {
       <div className={`playerOneBoard ${playerOneTurn ? "activeBorder" : ""}`}>
         {playerOneStand ? (
           <div id="p1-stand-overlay" className="stand-overlay puff-in-center">
-            STANDING
+            <h3>STANDING</h3>
           </div>
         ) : (
           ""
@@ -973,6 +987,7 @@ export const SingleplayerGame = () => {
         startGame={startGame}
         playerOneWins={playerOneWins}
         playerTwoWins={playerTwoWins}
+        resetBoard={resetBoard}
       >
         <div className="children-container">
           <h3 className="children-container">{popupText.title}</h3>

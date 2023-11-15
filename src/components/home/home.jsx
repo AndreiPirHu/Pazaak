@@ -4,8 +4,11 @@ import "./home.css";
 export const Home = () => {
   let navigate = useNavigate();
 
-  const navigateToLoadout = () => {
-    navigate("/loadout");
+  const navigateToMultiplayerLoadout = () => {
+    navigate("/multiplayer-loadout");
+  };
+  const navigateToSingleplayerLoadout = () => {
+    navigate("/singleplayer-loadout");
   };
 
   const navigateToRules = () => {
@@ -20,8 +23,17 @@ export const Home = () => {
         </div>
 
         <div className="button-container">
-          <button onClick={navigateToLoadout} className="game-button">
-            <span>New Game</span>
+          <button
+            onClick={navigateToSingleplayerLoadout}
+            className="game-button"
+          >
+            <span>Singleplayer</span>
+          </button>
+          <button
+            onClick={navigateToMultiplayerLoadout}
+            className="game-button"
+          >
+            <span>Multiplayer</span>
           </button>
           <button onClick={navigateToRules} className="game-button">
             <span>Rules</span>

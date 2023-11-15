@@ -1,0 +1,16 @@
+.SingleplayerLoadout {
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.SingleplayerLoadout .extra-cards-container {
+  padding-left: 0;
+}
+
+.SingleplayerLoadout .button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

@@ -285,6 +285,12 @@ body {
   animation: cardAnimation 0.5s linear;
 }
 
+.ExtraCardHidden\.png {
+  background-image: url("/src/assets/ExtraCardHidden.png");
+  position: relative;
+  animation: cardAnimation 0.5s linear;
+}
+
 .popup-text {
   display: grid;
   justify-content: center;
@@ -337,19 +343,39 @@ body {
 
 .stand-overlay {
   position: fixed;
-
+  width: 344px;
+  height: 130px;
   color: red;
   font-size: 3rem;
   font-family: "Black Ops One", sans-serif;
   z-index: 100;
+
+  pointer-events: none;
 }
 
 #p1-stand-overlay {
-  top: 60vh;
-  right: 20vw;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
+  rotate: -30deg;
+
+  margin-top: 32px;
+}
+
+#p1-stand-overlay h3 {
+  margin: 0;
 }
 
 #p2-stand-overlay {
-  top: 15vh;
-  right: 20vw;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 42px;
+  rotate: -30deg;
+}
+
+#p2-stand-overlay h3 {
+  margin: 0;
 }

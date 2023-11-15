@@ -141,7 +141,8 @@ export const MultiplayerGame = () => {
         break;
     }
     //reset game
-    resetBoard();
+    // resetBoard();
+
     //brings up popup
     setTriggerPopup(true);
   };
@@ -280,7 +281,9 @@ export const MultiplayerGame = () => {
     });
 
     //add the score
-    setPlayerOneScore(playerOneScore + scoreCounter(playerOneDeck[newCard]));
+    setPlayerOneScore(() => {
+      return 0 + scoreCounter(playerOneDeck[newCard]);
+    });
 
     //remove the already used card from the array after adding the score
     setPlayerOneDeck(
@@ -442,7 +445,7 @@ export const MultiplayerGame = () => {
       <div className={`playerTwoBoard ${playerOneTurn ? "" : "activeBorder"}`}>
         {playerTwoStand ? (
           <div id="p2-stand-overlay" className="stand-overlay puff-in-center">
-            STANDING
+            <h3>STANDING</h3>
           </div>
         ) : (
           ""
@@ -521,7 +524,7 @@ export const MultiplayerGame = () => {
       <div className={`playerOneBoard ${playerOneTurn ? "activeBorder" : ""}`}>
         {playerOneStand ? (
           <div id="p1-stand-overlay" className="stand-overlay puff-in-center">
-            STANDING
+            <h3>STANDING</h3>
           </div>
         ) : (
           ""
@@ -617,6 +620,7 @@ export const MultiplayerGame = () => {
         startGame={startGame}
         playerOneWins={playerOneWins}
         playerTwoWins={playerTwoWins}
+        resetBoard={resetBoard}
       >
         <div className="children-container">
           <h3 className="children-container">{popupText.title}</h3>

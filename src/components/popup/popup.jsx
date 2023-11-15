@@ -24,6 +24,7 @@ const Popup = (props) => {
             if (playerOneWins === 3 || playerTwoWins === 3) {
               navigateToHome();
             } else {
+              props.resetBoard();
               props.startGame();
             }
           }}
