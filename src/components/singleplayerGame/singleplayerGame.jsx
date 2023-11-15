@@ -143,7 +143,8 @@ export const SingleplayerGame = () => {
             "had over 20 score,used extra card to get under 20 and more than p1"
           );
           return;
-        } else if (playerOneScore >= currentScore && playerOneScore <= 20) {
+        } //removed this func because it has bad interaction with usestates in newEndTurn, the score is not correct and then there are problems with card slot order and so on. Need to fix useState callbacks to take in prevState in a good way.
+        /* else if (playerOneScore >= currentScore && playerOneScore <= 20) {
           //if score is still lower than player one, it ends turn
           newEndTurn();
           console.log(
@@ -151,7 +152,8 @@ export const SingleplayerGame = () => {
           );
           console.log(playerOneScore, playerTwoScore);
           return;
-        } else {
+        } */
+        else {
           playerStand();
           console.log("Standing because no good options?");
 
@@ -276,6 +278,7 @@ export const SingleplayerGame = () => {
               console.log(
                 "standing because no good options for winning and there is a tie"
               );
+              return;
             }
             //if there was no card that gave the desired score and no tie, the AI takes a wild chance on a new card instead
             newEndTurn();
@@ -793,7 +796,6 @@ export const SingleplayerGame = () => {
     checkFor20();
     checkForOver20();
     console.log(playerOneScore, playerTwoScore);
-    console.log(playerOneDeck);
   }, [playerOneScore, playerTwoScore]);
 
   useEffect(() => {
