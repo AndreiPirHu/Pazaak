@@ -119,10 +119,11 @@ export const SingleplayerGame = () => {
           console.log("had over 20 score,used extra card to get 20");
           return;
         } else {
-          //checks if the card gives a score under 20 and which one is the best if so
+          //checks if the card gives a score under 20 and better or equal to p1, and which card is best if so
           if (
             playerTwoScore + value < 20 &&
-            playerTwoScore + value > bestPossibleTotalScore.value
+            playerTwoScore + value > bestPossibleTotalScore.value &&
+            playerTwoScore + value >= playerOneScore
           ) {
             bestPossibleTotalScore.index = index;
             bestPossibleTotalScore.value = playerTwoScore + value;
@@ -160,7 +161,7 @@ export const SingleplayerGame = () => {
           return;
         }
       } else {
-        //if no best possible score was found, the AI stands
+        //if no best possible score was found, the AI ends turn to lose
         newEndTurn();
 
         console.log("had over 20 score, could not do anything but end turn");
