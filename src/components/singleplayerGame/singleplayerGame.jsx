@@ -140,7 +140,7 @@ export const SingleplayerGame = () => {
         if (currentScore <= 20 && currentScore >= playerOneScore) {
           playerStand();
           console.log(
-            "had over 20 score,used extra card to get under 20 and more than p1"
+            "had over 20 score,used extra card to get under 20 and more than or equal to p1"
           );
           return;
         } //removed this func because it has bad interaction with usestates in newEndTurn, the score is not correct and then there are problems with card slot order and so on. Need to fix useState callbacks to take in prevState in a good way.
