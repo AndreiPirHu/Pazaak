@@ -389,7 +389,7 @@ export const SingleplayerGame = () => {
             playerStand();
 
             console.log(
-              "Nothing else has been used, stands if score is higher than p1"
+              "Nothing else has been used, stands if score is higher or equal to p1"
             );
             return;
           } else {
