@@ -243,7 +243,7 @@ export const SingleplayerGame = () => {
             //checks all extra cards for the one that gives the best possible total score
             if (
               playerTwoScore + value <= 20 &&
-              playerTwoScore + value > playerOneScore
+              playerTwoScore + value >= playerOneScore
             ) {
               if (playerTwoScore + value > bestPossibleTotalScore.value) {
                 bestPossibleTotalScore.index = index;
@@ -258,7 +258,7 @@ export const SingleplayerGame = () => {
             console.log(
               `used extra card ${
                 AIExtraCards[bestPossibleTotalScore.index]
-              } to get higher score than p1 who is standing`
+              } to get higher or equal score to p1 who is standing`
             );
 
             if (playerTwoScore + bestPossibleTotalScore.value !== 20) {
