@@ -459,15 +459,21 @@ export const SingleplayerGame = () => {
       (winner == "playerOne" && playerOneWins == 2) ||
       (winner == "playerTwo" && playerTwoWins == 2)
     ) {
-      setPopupText((prevState) => ({
-        ...prevState,
-        title: `${winner} won the game!!!`,
-        text: `Congratulations!`,
-      }));
       //sets final score so game knows if it is the last round
       if (winner === "playerOne") {
+        setPopupText((prevState) => ({
+          ...prevState,
+          title: `You won the game!`,
+          text: `Congratulations!`,
+        }));
+
         setPlayerOneWins(playerOneWins + 1);
       } else {
+        setPopupText((prevState) => ({
+          ...prevState,
+          title: `Computer won the game!`,
+          text: `Better luck next time!`,
+        }));
         setPlayerTwoWins(playerTwoWins + 1);
       }
       //triggers popup
@@ -476,30 +482,31 @@ export const SingleplayerGame = () => {
       return;
     }
 
-    setPopupText((prevState) => ({
-      ...prevState,
-      title: `${winner} won this round!`,
-      text: `Ready for the next round?`,
-    }));
-    //checks if it is a tie or else who won
-
+    //checks who won or if it is a tie
     //add score to correct winner
-    switch (winner) {
-      case "tie":
-        setPopupText((prevState) => ({
-          ...prevState,
-          title: `Tie!`,
-          text: `Ready for the next round?`,
-        }));
-        break;
-      case "playerOne":
-        setPlayerOneWins(playerOneWins + 1);
-        break;
-      case "playerTwo":
-        setPlayerTwoWins(playerTwoWins + 1);
-        break;
+    if (winner === "playerOne") {
+      setPopupText((prevState) => ({
+        ...prevState,
+        title: `You won this round!`,
+        text: `Ready for the next round?`,
+      }));
+      setPlayerOneWins(playerOneWins + 1);
+    } else if (winner === "playerTwo") {
+      setPopupText((prevState) => ({
+        ...prevState,
+        title: `Computer won this round!`,
+        text: `Ready for the next round?`,
+      }));
+      setPlayerTwoWins(playerTwoWins + 1);
+    } else {
+      setPopupText((prevState) => ({
+        ...prevState,
+        title: `It's a Tie!`,
+        text: `Ready for the next round?`,
+      }));
     }
-    //reset game
+
+    //reset game //MOVED TO POPUP BUTTON//
     //resetBoard();
     //brings up popup
     setTriggerPopup(true);
